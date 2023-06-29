@@ -134,3 +134,28 @@ def deletePension(request,id):
         messages.success(request,"Account deleted successfully")
 
         return redirect('index')
+
+
+# Update pension account
+
+def updatePension(request,id):
+    if request.method == 'POST':
+        fullname = request.POST.get('fullname')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        rsa = request.POST.get('rsa')
+        pfa = request.POST.get('pfa')
+        balance = request.POST.get('balance')
+ 
+
+        pension = Pen.objects.get(id=id)
+        pension.fullname = fullname
+        pension.email = email
+        pension.phone = phone
+        pension.rsa = rsa
+        pension.pfa = pfa
+        pension.balance = balance
+        pension.save()
+
+        messages.success(request,"Account updated successfully")
+        return redirect('index')

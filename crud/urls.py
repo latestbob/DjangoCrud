@@ -9,6 +9,7 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('details/<str:id>/', views.details, name='details'),
     path('pension/<str:id>/', views.deletePension, name="delete"),
+    path('update/<str:id>/', views.updatePension, name='update'),
 
 
 ]
