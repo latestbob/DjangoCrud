@@ -112,6 +112,61 @@
 
                 {% for account in accounts %}
 
+                <!-- Button trigger modal -->
+                    {% comment %} <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                      Launch demo modal
+                    </button> {% endcomment %}
+
+                    <div class="modal fade" id="myModal{{ account.id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit {{ account.fullname }} Account</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            <form method="POST" action="}">
+                              {% csrf_token %}
+                              
+                              <input class="form-control"placeholder="Enter Your Full Name" type="text" id="fullname"value="{{ account.fullname }}" name="fullname" required>
+                              <br>
+                              <input class="form-control"placeholder="Enter Your Email Address" type="email"value="{{ account.email }}"  name="email" required>
+                              <br>
+                              <input class="form-control"placeholder="Enter Your Phone Number" type="text"value="{{ account.phone }}" name="phone" required>
+                              <br>
+                              <input class="form-control"placeholder="Enter Your PENCOM" type="text"value="{{ account.rsa }}"  name="rsa" required>
+                              <br>
+              
+                              <select name="pfa"class="form-control"required>
+                                  <option value="">Select PFA Company </option>
+              
+                                  {% for pfas in  pfa%}
+              
+                                      <option value="{{pfas}}" {% if account.pfa == pfas %}selected{% endif %}> {{pfas}} </option>
+              
+                                  {% endfor %}
+              
+                              </select>
+                            
+                              <br>
+                              <input class="form-control"placeholder="Enter RSA Balance" type="number"value="{{ account.balance }}"  name="balance" required>
+                              <br>
+                              <br>
+                              <button class="btn btn-success text-light py-2" type="submit">Update Account</button>
+                            </form>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+               
+
                     <tr>
                         <td>{{account.fullname}}</td>
                         <td>{{account.email}}</td>
@@ -122,7 +177,7 @@
                         <td>
                             <form method="POST"action="{% url 'delete' account.id %}">
                                 {% csrf_token %}
-                            <a href="{% url 'details' account.id %}"class="btn btn-sm btn-info text-light">View </a>||<a href=""class="btn btn-sm btn-warning text-light">Edit</a>|| <button type="submit"class="btn btn-sm btn-danger"> Delete</button>
+                            <a href="{% url 'details' account.id %}"class="btn btn-sm btn-info text-light">View </a>||<button type="button" class="modal-button btn-sm btn btn-warning" data-toggle="modal" data-target="#myModal{{ account.id }}">Edit</button>|| <button type="submit"class="btn btn-sm btn-danger"> Delete</button>
 
                             </form>
                         </td>
